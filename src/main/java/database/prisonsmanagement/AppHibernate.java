@@ -6,15 +6,11 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 
 public class AppHibernate {
 
@@ -81,12 +77,36 @@ public class AppHibernate {
                 System.out.println("Insert prisonId: ");
                 int prisonId = Utils.scannerOption();
                 object = ((InmatesEntity) object).inmateRegistration(prisonId);
-                ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
-                session.save(object);
+                String cnpInmate = Utils.scannerOptionString();
+                if(Utils.isCNPValid(cnpInmate)){
+                    ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
+                    session.save(object);
+                }else{
+
+                    while (Utils.isCNPValid(cnpInmate) == false){
+                        System.out.println("CNP is not valid. Try again");
+                        cnpInmate = Utils.scannerOptionString();
+                    }
+                    ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
+                    session.save(object);
+                }
+
             } else if (object instanceof UsersEntity) {
                 object = ((UsersEntity) object).userRegistration();
-                ((UsersEntity) object).setCnp(Utils.scannerOptionString());
-                session.save(object);
+                String userCnp = Utils.scannerOptionString();
+                if(Utils.isCNPValid(userCnp)){
+                    ((UsersEntity) object).setCnp(userCnp);
+                    session.save(object);
+                }else{
+
+                    while (Utils.isCNPValid(userCnp) == false){
+                        System.out.println("CNP is not valid. Try again");
+                        userCnp = Utils.scannerOptionString();
+                    }
+                    ((UsersEntity) object).setCnp(userCnp);
+                    session.save(object);
+                }
+
             } else if (object instanceof PrisonsEntity) {
                 object = ((PrisonsEntity) object).prisonRegistration();
                 session.save(object);
@@ -111,7 +131,7 @@ public class AppHibernate {
                 session.update(object);
             } else if (object instanceof UsersEntity) {
                 object = session.find(UsersEntity.class, id);
-                ((UsersEntity) object).selectForUpate((UsersEntity) object);
+                ((UsersEntity) object).selectForUpateUser((UsersEntity) object);
                 session.update(object);
             } else if (object instanceof PrisonsEntity) {
                 object = session.find(PrisonsEntity.class, Integer.parseInt(id));

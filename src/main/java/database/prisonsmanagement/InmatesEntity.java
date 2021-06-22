@@ -83,27 +83,37 @@ public class InmatesEntity {
     void selectForUpate(Object entity) {
         System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.CheckIn Date\n5.Check Out Date");
         int option = Utils.scannerOption();
-        Scanner scanner = new Scanner(System.in);
         switch (option) {
             case 1:
                 System.out.println("Introduce the new first name: ");
-                ((InmatesEntity) entity).setFirstNamePrison(scanner.nextLine());
+                ((InmatesEntity) entity).setFirstNamePrison(Utils.scannerOptionString());
                 break;
             case 2:
                 System.out.println("Introduce the new last name: ");
-                ((InmatesEntity) entity).setLastNamePrison(scanner.nextLine());
+                ((InmatesEntity) entity).setLastNamePrison(Utils.scannerOptionString());
                 break;
             case 3:
                 System.out.println("Introduce the new cnp: ");
-                ((InmatesEntity) entity).setCnpInmate(scanner.nextLine());
+                String inmateCnp = Utils.scannerOptionString();
+                if (Utils.isCNPValid(inmateCnp)) {
+                    ((InmatesEntity) entity).setCnpInmate(inmateCnp);
+                } else {
+
+                    while (Utils.isCNPValid(inmateCnp) == false) {
+                        System.out.println("CNP is not valid. Try again");
+                        inmateCnp = Utils.scannerOptionString();
+                    }
+                    ((InmatesEntity) entity).setCnpInmate(Utils.scannerOptionString());
+                }
+
                 break;
             case 4:
                 System.out.println("Insert date in format yyyy mm dd");
-                ((InmatesEntity) entity).setCheckInPrison(LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt()));
+                ((InmatesEntity) entity).setCheckInPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
                 break;
             case 5:
                 System.out.println("Insert date in format yyyy mm dd");
-                ((InmatesEntity) entity).setCheckOutPrison(LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt()));
+                ((InmatesEntity) entity).setCheckOutPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
                 break;
             case 6:
                 System.out.println("Insert prisonId: ");
@@ -128,8 +138,8 @@ public class InmatesEntity {
         System.out.println("Insert prison id: ");
         try {
             Session session = hibernate.getSessionFactory().openSession();
-           prisonsEntity = session.find(PrisonsEntity.class,prisonId);
-        }catch (Exception e){
+            prisonsEntity = session.find(PrisonsEntity.class, prisonId);
+        } catch (Exception e) {
             System.out.println(e);
         }
         inmate.setPrisonsEntity(prisonsEntity);

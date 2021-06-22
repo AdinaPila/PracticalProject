@@ -2,6 +2,8 @@ package database.prisonsmanagement;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -30,5 +32,11 @@ public class Utils {
             scannerOptionString();
         }
         return option;
+    }
+
+    public static boolean isCNPValid(String cnp) {
+        Pattern pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
+        Matcher matcher = pattern.matcher(cnp);
+        return matcher.matches();
     }
 }

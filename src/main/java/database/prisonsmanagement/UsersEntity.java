@@ -139,7 +139,7 @@ public class UsersEntity {
     }
 
 
-    void selectForUpate(Object entity) {
+    void selectForUpateUser(Object entity) {
         System.out.println("What element would you linke to be updated?\n1.First name\n2.Last name\n3.CNP\n4.User Rank\n5.Email address\n6.Password");
         int option = Utils.scannerOption();
         Scanner scanner = new Scanner(System.in);
@@ -154,7 +154,17 @@ public class UsersEntity {
                 break;
             case 3:
                 System.out.println("Introduce the new cnp: ");
-                ((UsersEntity) entity).setCnp(scanner.nextLine());
+                String userCnp = Utils.scannerOptionString();
+                if(Utils.isCNPValid(userCnp)){
+                    ((UsersEntity) entity).setCnp(userCnp);
+                }else{
+
+                    while (Utils.isCNPValid(userCnp) == false){
+                        System.out.println("CNP is not valid. Try again");
+                        userCnp = Utils.scannerOptionString();
+                    }
+                    ((UsersEntity) entity).setCnp(userCnp);
+                }
                 break;
             case 4:
                 System.out.println("Introduce the new rank: ");
