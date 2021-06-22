@@ -100,7 +100,6 @@ public class PrisonsEntity {
         System.out.println("Total capacity: ");
         prison.setTotalCapacity(Utils.scannerOption());
 
-
         return prison;
     }
 

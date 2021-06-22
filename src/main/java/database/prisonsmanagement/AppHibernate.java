@@ -31,7 +31,13 @@ public class AppHibernate {
         InmatesEntity inmate2 = new InmatesEntity();
         // hibernate.update(inmate2,"1730506460078");
 
-        hibernate.update(prison1, "1");
+       // hibernate.update(prison1, "1");
+        Meniu meniu = new Meniu();
+
+        meniu.selectRegistrationVsLogin();
+
+        //meniu.meniu(user, "1980507460028");
+
 
 
     }
@@ -187,6 +193,18 @@ public class AppHibernate {
         return null;
     }
 
+    public UsersEntity findUsersByEmail(String email) {
+        try {
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("FROM UsersEntity WHERE appEmail = :appEmail").setParameter("appEmail", email);
+            UsersEntity user = (UsersEntity) query.uniqueResult();
+            return user;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public InmatesEntity findInmateByCnp(String cnp) {
         try {
             Session session = getSessionFactory().openSession();
@@ -250,5 +268,21 @@ public class AppHibernate {
         return null;
     }
 
+    public void registrationMeniu(UsersEntity user){
+        try {
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("FROM UsersEntity");
+            List<UsersEntity> userList = query.getResultList();
+            if(userList.contains(user)){
+                System.out.println("The record already exist");
+            }else{
+                insert(user);
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
 
 }

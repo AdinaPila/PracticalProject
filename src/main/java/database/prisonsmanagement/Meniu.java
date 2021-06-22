@@ -1,86 +1,101 @@
-//package database.prisonsmanagement;
-//
-//import org.hibernate.Session;
-//import org.hibernate.query.Query;
-//
-//import java.util.List;
-//
-//public class Meniu {
-//
-//    private UsersEntity user;
-//    private PrisonsEntity prison;
-//    private InmatesEntity inmate;
-//    private AppHibernate hibernate = new AppHibernate();
-//
-//    public Meniu(UsersEntity user, PrisonsEntity prison, InmatesEntity inmate) {
-//        this.user = user;
-//        this.prison = prison;
-//        this.inmate = inmate;
-//    }
-//
-//    public Meniu() {
-//    }
-//
-//    public void meniu(UsersEntity user, Integer prisonId){
-//        InmatesEntity inmate = null;
-//        PrisonsEntity prison = null;
-//        if(user.getAccessLevel() > 3){
-//            System.out.println("Welcome to the Prisons Management Application");
-//            System.out.println("Select the action from the below meniu:\n1.Insert inmate\n2.Update inmate\n3.Delete inmate\n4.Insert prison\n5.Update prison\n6.Delete prison");
-//            int option = Utils.scannerOption();
-//            while (option != 0){
-//                switch (option){
-//                    case 1:
-//                    hibernate.insert(inmate.inmateRegistration(prisonId));
-//                    break;
-//                    case 2: hibernate.update(inmate);
-//                    break;
-//                    case 3: hibernate.delete(inmate);
-//                    break;
-//                    case 4: hibernate.insert(prison);
-//                    break;
-//                    case 5:hibernate.update(prison);
-//                    break;
-//                    case 6: hibernate.delete(prison);
-//                    break;
-//                }
-//                option = Utils.scannerOption();
-//            }
-//        }else {
-//            System.out.println("Welcome to the Prisons Management Application");
-//            System.out.println("Select the action from the below meniu:\n1.See all the application users\n2.See all the registered inmates\3.See all the registered prisons");
-//            int option = Utils.scannerOption();
-//            while (option != 0){
-//                switch (option){
-//                    case 1:
-//                        user.seeAllUsers();
-//                        break;
-//                    case 2: user.seeAllInmates();
-//                        break;
-//                    case 3: user.seeAllPrisons();
-//                        break;
-//                }
-//                option = Utils.scannerOption();
-//            }
-//
-//        }
-//
-//    }
-//
-//    public void registrationMeniu(UsersEntity user){
-//        try {
-//            Session session = hibernate.getSessionFactory().openSession();
-//            Query query = session.createQuery("FROM UsersEntity");
-//            List<UsersEntity> userList = query.getResultList();
-//            if(userList.contains(user)){
-//                System.out.println("The record already exist");
-//            }else{
-//               hibernate.insert(user);
-//            }
-//
-//        }catch (Exception e){
-//            System.out.println(e);
-//        }
-//
-//    }
-//}
+package database.prisonsmanagement;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
+
+public class Meniu extends AppHibernate{
+
+
+    public void selectRegistrationVsLogin(){
+
+        System.out.println("Welcome to the Prisons Management Application\nWhat action would you like to perform?\n1.Registration\n2.Login");
+        int option = Utils.scannerOption();
+        switch (option){
+            case 1: registrationMeniu(new UsersEntity());
+            break;
+            case 2:
+                System.out.println("Insert email address and password");
+                System.out.println("Email: " );
+                String email = Utils.scannerOptionString();
+                System.out.println("Password: " );
+                String password = Utils.scannerOptionString();
+                boolean verification = verifyCredentials(email,password);
+                if(verification == true){
+                    meniu(findUsersByEmail(email),findUsersByEmail(email).getCnp());
+                }else{
+                    System.out.println("Invalid login details. Try again");
+                    System.out.println("==================================");
+                    selectRegistrationVsLogin();
+                }
+        }
+
+
+    }
+
+    public void meniu(Object object, String id){
+        UsersEntity user = findUsersByCnp(id);
+
+        if(user.getAccessLevel() == 1){
+
+            System.out.println("Select the action from the below meniu:\n1.Insert inmate\n2.Update inmate\n3.Delete inmate\n4.Insert prison\n5.Update prison\n6.Delete prison");
+            int option = Utils.scannerOption();
+            while (option != 0){
+                switch (option){
+                    case 1:
+                    insert(new InmatesEntity());
+                    break;
+                    case 2:
+                        System.out.println("Insert CNP of the inmate that you want to be updated: ");
+                        String cnpForUpdate = Utils.scannerOptionString();
+                        InmatesEntity inmate = findInmateByCnp(cnpForUpdate);
+                        update(inmate, cnpForUpdate);
+                    break;
+                    case 3:
+                        System.out.println("Insert CNP of the inmate that you want to be deleted: ");
+                        String cnpForDelete = Utils.scannerOptionString();
+                        InmatesEntity inmateForDelete = findInmateByCnp(cnpForDelete);
+                        delete(inmateForDelete);
+                    break;
+                    case 4: insert(new PrisonsEntity());
+                    break;
+                    case 5:
+                        System.out.println("Insert the ID of the prison that you want to be updated: ");
+                        String idForUpdate = Utils.scannerOptionString();
+                        PrisonsEntity prison= findById(Integer.parseInt(idForUpdate));
+                        update(prison,id);
+                    break;
+                    case 6: System.out.println("Insert the ID of the prison that you want to be deleted: ");
+                        String idForDelete = Utils.scannerOptionString();
+                        PrisonsEntity prisonForDelete= findById(Integer.parseInt(idForDelete));
+                        update(prisonForDelete,idForDelete);
+                        delete(prisonForDelete);
+                    break;
+                }
+                option = Utils.scannerOption();
+            }
+        }else {
+            System.out.println("Welcome to the Prisons Management Application");
+            System.out.println("Select the action from the below meniu:\n1.See all the application users\n2.See all the registered inmates\3.See all the registered prisons");
+            int option = Utils.scannerOption();
+            while (option != 0){
+                switch (option){
+                    case 1:
+                        seeAllUsers();
+                        break;
+                    case 2: seeAllInmates();
+                        break;
+                    case 3: seeAllPrisons();
+                        break;
+                }
+                option = Utils.scannerOption();
+            }
+
+        }
+
+    }
+
+
+}
