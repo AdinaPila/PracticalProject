@@ -1,11 +1,8 @@
-package database.prisonsmanagement;
+package database.prisonsmanagement.entitys;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.boot.model.naming.ImplicitPrimaryKeyJoinColumnNameSource;
+import database.prisonsmanagement.Utils;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -69,7 +66,7 @@ public class PrisonsEntity {
 
 
 
-    void selectForUpate(Object entity) {
+    void selectForUpatePrison(Object entity) {
         System.out.println("What element would you like to be updated?\n1.Prison Name\n2.Security Level\n3.Total Capacity");
         int option = Utils.scannerOption();
         Scanner scanner = new Scanner(System.in);

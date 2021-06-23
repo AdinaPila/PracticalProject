@@ -1,5 +1,9 @@
-package database.prisonsmanagement;
+package database.prisonsmanagement.entitys;
 
+import database.prisonsmanagement.Utils;
+import database.prisonsmanagement.entitys.InmatesEntity;
+import database.prisonsmanagement.entitys.PrisonsEntity;
+import database.prisonsmanagement.entitys.UsersEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -13,30 +17,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class AppHibernate {
-
-
-    public static void main(String[] args) {
-        AppHibernate hibernate = new AppHibernate();
-        UsersEntity user = new UsersEntity();
-
-        PrisonsEntity prison = new PrisonsEntity();
-        PrisonsEntity prison1 = new PrisonsEntity();
-        PrisonsEntity prison2 = new PrisonsEntity();
-
-        InmatesEntity inmate = new InmatesEntity();
-        InmatesEntity inmate2 = new InmatesEntity();
-        // hibernate.update(inmate2,"1730506460078");
-
-       // hibernate.update(prison1, "1");
-        Meniu meniu = new Meniu();
-
-        meniu.selectRegistrationVsLogin();
-
-        //meniu.meniu(user, "1980507460028");
-
-
-
-    }
 
     public SessionFactory getSessionFactory() {
 
@@ -68,6 +48,17 @@ public class AppHibernate {
         return null;
     }
 
+    public void setCnp(Object object) {
+        String cnpInmate = Utils.scannerOptionString();
+        if (Utils.isCNPValid(cnpInmate)) {
+            ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
+        } else {
+            while (Utils.isCNPValid(cnpInmate) == false) {
+                System.out.println("CNP is not valid. Try again");
+                cnpInmate = Utils.scannerOptionString();
+            }
+        }
+    }
 
     public void insert(Object object) {
         try {
@@ -77,45 +68,25 @@ public class AppHibernate {
                 System.out.println("Insert prisonId: ");
                 int prisonId = Utils.scannerOption();
                 object = ((InmatesEntity) object).inmateRegistration(prisonId);
-                String cnpInmate = Utils.scannerOptionString();
-                if(Utils.isCNPValid(cnpInmate)){
-                    ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
-                    session.save(object);
-                }else{
-
-                    while (Utils.isCNPValid(cnpInmate) == false){
-                        System.out.println("CNP is not valid. Try again");
-                        cnpInmate = Utils.scannerOptionString();
-                    }
-                    ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
-                    session.save(object);
-                }
-
+                setCnp(object);
+                ((InmatesEntity) object).setCnpInmate(Utils.scannerOptionString());
+                session.save(object);
             } else if (object instanceof UsersEntity) {
                 object = ((UsersEntity) object).userRegistration();
                 String userCnp = Utils.scannerOptionString();
-                if(Utils.isCNPValid(userCnp)){
-                    ((UsersEntity) object).setCnp(userCnp);
-                    session.save(object);
-                }else{
-
-                    while (Utils.isCNPValid(userCnp) == false){
-                        System.out.println("CNP is not valid. Try again");
-                        userCnp = Utils.scannerOptionString();
-                    }
-                    ((UsersEntity) object).setCnp(userCnp);
-                    session.save(object);
-                }
-
+                setCnp(object);
+                session.save(object);
             } else if (object instanceof PrisonsEntity) {
                 object = ((PrisonsEntity) object).prisonRegistration();
                 session.save(object);
             }
             transaction.commit();
             session.close();
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             System.out.println(e);
         }
+
     }
 
     public void update(Object object, String id) {
@@ -127,15 +98,15 @@ public class AppHibernate {
             transaction = session.beginTransaction();
             if (object instanceof InmatesEntity) {
                 object = session.find(InmatesEntity.class, id);
-                ((InmatesEntity) object).selectForUpate((InmatesEntity) object);
+                ((InmatesEntity) object).selectForUpateInmate((InmatesEntity) object);
                 session.update(object);
             } else if (object instanceof UsersEntity) {
                 object = session.find(UsersEntity.class, id);
-                ((UsersEntity) object).selectForUpateUser((UsersEntity) object);
+                ((UsersEntity) object).selectForUpdateUser((UsersEntity) object);
                 session.update(object);
             } else if (object instanceof PrisonsEntity) {
                 object = session.find(PrisonsEntity.class, Integer.parseInt(id));
-                ((PrisonsEntity) object).selectForUpate((PrisonsEntity) object);
+                ((PrisonsEntity) object).selectForUpatePrison((PrisonsEntity) object);
                 session.update(object);
             }
             transaction.commit();
@@ -152,6 +123,7 @@ public class AppHibernate {
         }
 
     }
+
 
     public void delete(Object object) {
         Session session = null;
@@ -288,21 +260,52 @@ public class AppHibernate {
         return null;
     }
 
-    public void registrationMeniu(UsersEntity user){
+    public void registrationMeniu(UsersEntity user) {
         try {
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM UsersEntity");
             List<UsersEntity> userList = query.getResultList();
-            if(userList.contains(user)){
+            if (userList.contains(user)) {
                 System.out.println("The record already exist");
-            }else{
+            } else {
                 insert(user);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
+    }
+
+    public void list(List<Object> object) {
+        if (object instanceof UsersEntity) {
+            for (UsersEntity item : seeAllUsers()) {
+                System.out.println(item.getFirstName() +
+                        "\n" + item.getLastName() +
+                        "\n" + item.getCnp() +
+                        "\n" + item.getUserRank() +
+                        "\n" + item.getAccessLevel() +
+                        "\n" + item.getAppEmail() +
+                        "\n" + item.getAppPassword());
+            }
+        } else if (object instanceof InmatesEntity) {
+            for (InmatesEntity item : seeAllInmates()) {
+                System.out.println(item.getFirstNamePrison() +
+                        "\n" + item.getLastNamePrison() +
+                        "\n" + item.getCnpInmate() +
+                        "\n" + item.getPrisonsEntity().getPrisonId() +
+                        "\n" + item.getCheckInPrison() +
+                        "\n" + item.getCheckOutPrison()
+                );
+            }
+        } else if (object instanceof PrisonsEntity) {
+            for (PrisonsEntity item : seeAllPrisons()) {
+                System.out.println(item.getPrisonId() +
+                        "\n" + item.getPrisonName() +
+                        "\n" + item.getSecurityLevel() +
+                        "\n" + item.getTotalCapacity());
+            }
+        }
     }
 
 }

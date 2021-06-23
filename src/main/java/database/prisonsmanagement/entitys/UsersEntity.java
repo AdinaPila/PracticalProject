@@ -1,12 +1,9 @@
-package database.prisonsmanagement;
+package database.prisonsmanagement.entitys;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import database.prisonsmanagement.UserRank;
+import database.prisonsmanagement.Utils;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Entity
@@ -139,7 +136,7 @@ public class UsersEntity {
     }
 
 
-    void selectForUpateUser(Object entity) {
+    void selectForUpdateUser(Object entity) {
         System.out.println("What element would you linke to be updated?\n1.First name\n2.Last name\n3.CNP\n4.User Rank\n5.Email address\n6.Password");
         int option = Utils.scannerOption();
         Scanner scanner = new Scanner(System.in);
@@ -182,20 +179,4 @@ public class UsersEntity {
     }
 
 
-
-
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UsersEntity)) return false;
-        UsersEntity that = (UsersEntity) o;
-        return Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getCnp(), that.getCnp()) && Objects.equals(getUserRank(), that.getUserRank()) && Objects.equals(getAccessLevel(), that.getAccessLevel()) && Objects.equals(getAppEmail(), that.getAppEmail()) && Objects.equals(getAppPassword(), that.getAppPassword());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getCnp(), getUserRank(), getAccessLevel(), getAppEmail(), getAppPassword());
-    }
 }

@@ -1,13 +1,10 @@
-package database.prisonsmanagement;
+package database.prisonsmanagement.entitys;
 
+import database.prisonsmanagement.Utils;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 @Entity
 @Table(name = "inmates")
@@ -80,7 +77,7 @@ public class InmatesEntity {
     }
 
 
-    void selectForUpate(Object entity) {
+    void selectForUpateInmate(Object entity) {
         System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.CheckIn Date\n5.Check Out Date");
         int option = Utils.scannerOption();
         switch (option) {
