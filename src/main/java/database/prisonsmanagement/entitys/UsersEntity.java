@@ -105,6 +105,12 @@ public class UsersEntity extends AppHibernate {
         insert(object);
     }
 
+    public void updateUser(UsersEntity user, String cnp){
+        user = findUsersByCnp(cnp);
+        user.selectForUpdateUser(user);
+        update(user, cnp);
+    }
+
     public String selectUserRankAndAccessLevel(Object user) {
         System.out.println("Insert user rank:\n 1.LIEUTENANT\n" +
                 "2.CAPTAIN\n" +

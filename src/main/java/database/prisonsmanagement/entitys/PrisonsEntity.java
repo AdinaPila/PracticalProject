@@ -69,15 +69,19 @@ public class PrisonsEntity extends AppHibernate {
         insert(prison);
    }
 
+   public void updatePrison(PrisonsEntity prison, String id){
+        prison = findById(Integer.parseInt(id));
+        prison.selectForUpatePrison(prison);
+        update(prison,id);
+   }
 
     public void selectForUpatePrison(Object entity) {
         System.out.println("What element would you like to be updated?\n1.Prison Name\n2.Security Level\n3.Total Capacity");
         int option = Utils.scannerOption();
-        Scanner scanner = new Scanner(System.in);
         switch (option) {
             case 1:
                 System.out.println("Insert the new name: ");
-                ((PrisonsEntity) entity).setPrisonName(scanner.nextLine());
+                ((PrisonsEntity) entity).setPrisonName(Utils.scannerOptionString());
                 break;
             case 2:
                 System.out.println("Insert the new security level: ");

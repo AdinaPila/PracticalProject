@@ -90,6 +90,7 @@ public class Meniu extends AppHibernate {
                             System.out.println(item);
                         }
 
+
                         break;
                     case 2:
                         for (InmatesEntity item:seeAllInmates()) {

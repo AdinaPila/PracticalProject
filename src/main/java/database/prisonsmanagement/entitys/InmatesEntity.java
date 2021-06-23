@@ -87,6 +87,12 @@ public class InmatesEntity extends AppHibernate {
 
     }
 
+    public void updateInmate(InmatesEntity inmate, String cnp){
+        inmate = findInmateByCnp(cnp);
+        inmate.selectForUpdateInmate(inmate);
+        update(inmate, cnp);
+    }
+
     void selectForUpdateInmate(Object entity) {
         System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.CheckIn Date\n5.Check Out Date");
         int option = Utils.scannerOption();
