@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 @Entity
 @Table(name = "users")
-public class UsersEntity {
+public class UsersEntity extends AppHibernate {
 
     private String firstName;
 
@@ -94,8 +94,15 @@ public class UsersEntity {
         System.out.println("Insert the password: ");
         user.setAppPassword(Utils.scannerOptionString());
         System.out.println("Insert user CNP: ");
-        user.setCnp(null);
+
         return user;
+    }
+
+    public void insertUser(UsersEntity object) {
+        object = object.userRegistration();
+        String userCnp = Utils.scannerOptionString();
+        Utils.setCnp(object,userCnp);
+        insert(object);
     }
 
     public String selectUserRankAndAccessLevel(Object user) {
@@ -152,11 +159,11 @@ public class UsersEntity {
             case 3:
                 System.out.println("Introduce the new cnp: ");
                 String userCnp = Utils.scannerOptionString();
-                if(Utils.isCNPValid(userCnp)){
+                if (Utils.isCNPValid(userCnp)) {
                     ((UsersEntity) entity).setCnp(userCnp);
-                }else{
+                } else {
 
-                    while (Utils.isCNPValid(userCnp) == false){
+                    while (Utils.isCNPValid(userCnp) == false) {
                         System.out.println("CNP is not valid. Try again");
                         userCnp = Utils.scannerOptionString();
                     }

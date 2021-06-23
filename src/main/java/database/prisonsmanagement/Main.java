@@ -22,7 +22,10 @@ public class Main {
         // hibernate.update(prison1, "1");
         Meniu meniu = new Meniu();
 
-        meniu.selectRegistrationVsLogin();
+       // inmate.insertInmate(inmate);
+       // user.insertUser(user);
+        prison.insertPrison(prison);
+       // meniu.selectRegistrationVsLogin();
 
         //meniu.meniu(user, "1980507460028");
 

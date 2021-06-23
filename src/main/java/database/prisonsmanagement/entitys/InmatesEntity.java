@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "inmates")
-public class InmatesEntity {
+public class InmatesEntity extends AppHibernate {
 
     private String firstNamePrison;
 
@@ -77,7 +77,17 @@ public class InmatesEntity {
     }
 
 
-    void selectForUpateInmate(Object entity) {
+    public void insertInmate(InmatesEntity object) {
+        System.out.println("Insert prisonId: ");
+        int prisonId = Utils.scannerOption();
+        object = object.inmateRegistration(prisonId);
+        String cnp = Utils.scannerOptionString();
+        Utils.setCnp(object,cnp);
+        insert(object);
+
+    }
+
+    void selectForUpdateInmate(Object entity) {
         System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.CheckIn Date\n5.Check Out Date");
         int option = Utils.scannerOption();
         switch (option) {
@@ -132,7 +142,6 @@ public class InmatesEntity {
         inmate.setCheckInPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
         System.out.println("Insert checkOut date - use format yyyy mm dd:  ");
         inmate.setCheckOutPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
-        System.out.println("Insert prison id: ");
         try {
             Session session = hibernate.getSessionFactory().openSession();
             prisonsEntity = session.find(PrisonsEntity.class, prisonId);
@@ -141,7 +150,6 @@ public class InmatesEntity {
         }
         inmate.setPrisonsEntity(prisonsEntity);
         System.out.println("Insert inmate CNP: ");
-        inmate.setCnpInmate(null);
 
         return inmate;
     }

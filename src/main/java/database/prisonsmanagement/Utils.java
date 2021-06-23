@@ -1,5 +1,8 @@
 package database.prisonsmanagement;
 
+import database.prisonsmanagement.entitys.InmatesEntity;
+import database.prisonsmanagement.entitys.UsersEntity;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -38,5 +41,26 @@ public class Utils {
         Pattern pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
         Matcher matcher = pattern.matcher(cnp);
         return matcher.matches();
+    }
+
+    public static void setCnp(Object object, String cnp) {
+        if (object instanceof InmatesEntity) {
+            if (Utils.isCNPValid(cnp)) {
+                ((InmatesEntity) object).setCnpInmate(cnp);
+            } else {
+                System.out.println("CNP is not valid. Try again");
+                cnp = Utils.scannerOptionString();
+                setCnp(object,cnp);
+            }
+
+        } else if(object instanceof UsersEntity){
+            if (Utils.isCNPValid(cnp)) {
+                ((UsersEntity) object).setCnp(cnp);
+            } else {
+                System.out.println("CNP is not valid. Try again");
+                cnp = Utils.scannerOptionString();
+                setCnp(object,cnp);
+            }
+        }
     }
 }

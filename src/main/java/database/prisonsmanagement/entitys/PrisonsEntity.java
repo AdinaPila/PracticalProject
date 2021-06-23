@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 @Entity
 @Table(name = "prisons")
-public class PrisonsEntity {
+public class PrisonsEntity extends AppHibernate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,9 +64,13 @@ public class PrisonsEntity {
         return inmatesList;
     }
 
+   public void insertPrison(PrisonsEntity prison){
+        prison = prisonRegistration();
+        insert(prison);
+   }
 
 
-    void selectForUpatePrison(Object entity) {
+    public void selectForUpatePrison(Object entity) {
         System.out.println("What element would you like to be updated?\n1.Prison Name\n2.Security Level\n3.Total Capacity");
         int option = Utils.scannerOption();
         Scanner scanner = new Scanner(System.in);
