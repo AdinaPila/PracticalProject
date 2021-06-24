@@ -1,4 +1,4 @@
-package database.prisonsmanagement.entitys;
+package database.prisonsmanagement.entities;
 
 import database.prisonsmanagement.Utils;
 import org.hibernate.Session;

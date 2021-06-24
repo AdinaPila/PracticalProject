@@ -1,10 +1,9 @@
-package database.prisonsmanagement.entitys;
+package database.prisonsmanagement.entities;
 
 import database.prisonsmanagement.Utils;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Scanner;
 
 @Entity
 @Table(name = "prisons")

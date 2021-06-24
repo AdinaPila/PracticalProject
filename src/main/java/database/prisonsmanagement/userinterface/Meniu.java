@@ -1,10 +1,10 @@
 package database.prisonsmanagement.userinterface;
 
-import database.prisonsmanagement.entitys.AppHibernate;
+import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.Utils;
-import database.prisonsmanagement.entitys.InmatesEntity;
-import database.prisonsmanagement.entitys.PrisonsEntity;
-import database.prisonsmanagement.entitys.UsersEntity;
+import database.prisonsmanagement.entities.InmatesEntity;
+import database.prisonsmanagement.entities.PrisonsEntity;
+import database.prisonsmanagement.entities.UsersEntity;
 
 public class Meniu extends AppHibernate {
 

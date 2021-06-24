@@ -1,4 +1,4 @@
-package database.prisonsmanagement.entitys;
+package database.prisonsmanagement.entities;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -218,7 +218,7 @@ public class AppHibernate {
             Query query = session.createQuery("FROM UsersEntity");
             List<UsersEntity> userList = query.getResultList();
             if (userList.contains(user)) {
-                System.out.println("The record already exist");
+                System.out.println("The record already exists");
             } else {
                 insert(user);
             }

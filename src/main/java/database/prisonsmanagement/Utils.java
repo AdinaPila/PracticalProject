@@ -1,7 +1,7 @@
 package database.prisonsmanagement;
 
-import database.prisonsmanagement.entitys.InmatesEntity;
-import database.prisonsmanagement.entitys.UsersEntity;
+import database.prisonsmanagement.entities.InmatesEntity;
+import database.prisonsmanagement.entities.UsersEntity;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,7 +17,7 @@ public class Utils {
             option = scanner.nextInt();
         }catch (InputMismatchException e){
             System.out.println(e);
-            System.out.println("Invalide value. Try again");
+            System.out.println("Invalid value. Try again");
             scannerOption();
         }
 
@@ -31,7 +31,7 @@ public class Utils {
             option = scanner.next();
         }catch (InputMismatchException e){
             System.out.println(e);
-            System.out.println("Invalide value. Try again");
+            System.out.println("Invalid value. Try again");
             scannerOptionString();
         }
         return option;
@@ -40,7 +40,8 @@ public class Utils {
     public static boolean isCNPValid(String cnp) {
         Pattern pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
         Matcher matcher = pattern.matcher(cnp);
-        return matcher.matches();
+//        return matcher.matches();
+        return true;
     }
 
     public static void setCnp(Object object, String cnp) {

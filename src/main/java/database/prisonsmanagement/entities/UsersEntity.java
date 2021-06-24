@@ -1,4 +1,4 @@
-package database.prisonsmanagement.entitys;
+package database.prisonsmanagement.entities;
 
 import database.prisonsmanagement.UserRank;
 import database.prisonsmanagement.Utils;
@@ -144,13 +144,13 @@ public class UsersEntity extends AppHibernate {
         } else {
             ((UsersEntity) user).setAccessLevel(2);
         }
-        System.out.println("The user acces level is: " + ((UsersEntity) user).getAccessLevel());
+        System.out.println("The user access level is: " + ((UsersEntity) user).getAccessLevel());
         return ((UsersEntity) user).getUserRank();
     }
 
 
     void selectForUpdateUser(Object entity) {
-        System.out.println("What element would you linke to be updated?\n1.First name\n2.Last name\n3.CNP\n4.User Rank\n5.Email address\n6.Password");
+        System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.User Rank\n5.Email address\n6.Password");
         int option = Utils.scannerOption();
         Scanner scanner = new Scanner(System.in);
         switch (option) {
