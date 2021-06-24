@@ -65,17 +65,4 @@ public class PrisonsEntity extends AppHibernate {
 
 
 
-    public PrisonsEntity prisonRegistration() {
-        PrisonsEntity prison = new PrisonsEntity();
-        System.out.println("Insert prison name: ");
-        prison.setPrisonName(Utils.scannerOptionString());
-        System.out.println("Insert security level: ");
-        prison.setSecurityLevel(Utils.scannerOption());
-        System.out.println("Total capacity: ");
-        prison.setTotalCapacity(Utils.scannerOption());
-
-        return prison;
-    }
-
-
 }

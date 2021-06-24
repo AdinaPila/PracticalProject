@@ -76,18 +76,4 @@ public class InmatesEntity extends AppHibernate {
         this.prisonsEntity = prisonsEntity;
     }
 
-
-
-
-    @Override
-    public String toString() {
-        return "InmatesEntity{" +
-                "firstNamePrison='" + firstNamePrison + '\'' +
-                ", lastNamePrison='" + lastNamePrison + '\'' +
-                ", cnpInmate='" + cnpInmate + '\'' +
-                ", checkInPrison=" + checkInPrison +
-                ", checkOutPrison=" + checkOutPrison +
-                ", prisonsEntity=" + prisonsEntity +
-                '}';
-    }
 }

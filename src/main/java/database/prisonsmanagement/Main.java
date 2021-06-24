@@ -30,13 +30,14 @@ public class Main {
         UsersServices user1 = new UsersServices();
 //        user1.updateUser(user, "1980507460028");
         PrisonsServices prisonServices = new PrisonsServices();
-        prisonServices.insertPrison(prison);
+      //  prisonServices.insertPrison(prison);
        // inmate.insertInmate(inmate);
        // user.insertUser(user);
        // prison.insertPrison(prison);
        // meniu.selectRegistrationVsLogin();
 
         //meniu.meniu(user, "1980507460028");
+        prisonServices.updatePrison(prison,"2");
 
 
 

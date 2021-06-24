@@ -7,7 +7,7 @@ import database.prisonsmanagement.entities.PrisonsEntity;
 public class PrisonsServices extends AppHibernate {
 
     public void insertPrison(PrisonsEntity prison){
-        prison = prison.prisonRegistration();
+        prison = prisonRegistration();
         insert(prison);
     }
 
@@ -17,24 +17,36 @@ public class PrisonsServices extends AppHibernate {
         update(prison,id);
     }
 
-    public void selectForUpatePrison(Object entity) {
+    public void selectForUpatePrison(PrisonsEntity entity) {
         System.out.println("What element would you like to be updated?\n1.Prison Name\n2.Security Level\n3.Total Capacity");
         int option = Utils.scannerOption();
         switch (option) {
             case 1:
                 System.out.println("Insert the new name: ");
-                ((PrisonsEntity) entity).setPrisonName(Utils.scannerOptionString());
+                entity.setPrisonName(Utils.scannerOptionString());
                 break;
             case 2:
                 System.out.println("Insert the new security level: ");
-                ((PrisonsEntity) entity).setSecurityLevel(Utils.scannerOption());
+                entity.setSecurityLevel(Utils.scannerOption());
                 break;
             case 3:
                 System.out.println("Insert the new capacity: ");
-                ((PrisonsEntity) entity).setTotalCapacity(Utils.scannerOption());
+                entity.setTotalCapacity(Utils.scannerOption());
                 break;
 
         }
 
+    }
+
+    public PrisonsEntity prisonRegistration() {
+        PrisonsEntity prison = new PrisonsEntity();
+        System.out.println("Insert prison name: ");
+        prison.setPrisonName(Utils.scannerOptionString());
+        System.out.println("Insert security level: ");
+        prison.setSecurityLevel(Utils.scannerOption());
+        System.out.println("Total capacity: ");
+        prison.setTotalCapacity(Utils.scannerOption());
+
+        return prison;
     }
 }
