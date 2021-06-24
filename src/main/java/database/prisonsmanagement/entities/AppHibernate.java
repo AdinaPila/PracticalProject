@@ -105,13 +105,13 @@ public class AppHibernate {
             UsersEntity user = (UsersEntity) query.uniqueResult();
             if (user != null) {
                 if (user.getAppEmail().equals(email) && user.getAppPassword().equals(appPassword)) {
-                    System.out.println("Login successfull");
+                    System.out.println("Login successful");
                     isTrue = true;
 
                 } else if (user.getAppEmail().equals(email) && !user.getAppPassword().equals(appPassword)) {
-                    System.out.println("Login faild. Incorrect Password");
+                    System.out.println("Login failed. Incorrect Password");
                 } else if (!user.getAppEmail().equals(email) && user.getAppPassword().equals(appPassword)) {
-                    System.out.println("Login faild. Incorrect Email");
+                    System.out.println("Login failed. Incorrect Email");
                 }
             } else {
                 System.out.println("The introduced email address does not exist");
