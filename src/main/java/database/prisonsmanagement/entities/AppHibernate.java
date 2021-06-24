@@ -1,5 +1,6 @@
 package database.prisonsmanagement.entities;
 
+import database.prisonsmanagement.Utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,6 +10,9 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
+import java.lang.reflect.UndeclaredThrowableException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
@@ -186,10 +190,11 @@ public class AppHibernate {
         return null;
     }
 
-    public List<InmatesEntity> seeAllInmates() {
+    public List<InmatesEntity> seeAllInmates(LocalDate checkOutDate) {
         try {
+            Date date = java.sql.Date.valueOf(checkOutDate);
             Session session = getSessionFactory().openSession();
-            Query query = session.createQuery("FROM InmatesEntity");
+            Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison < '"+date+"'");
             List<InmatesEntity> inmatesList = query.getResultList();
             return inmatesList;
 
@@ -197,6 +202,24 @@ public class AppHibernate {
             System.out.println(e);
         }
         return null;
+
+    }
+
+
+    public List<InmatesEntity> seeAllInmatesBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            Date date = java.sql.Date.valueOf(startDate);
+            Date date1 = java.sql.Date.valueOf(startDate);
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison BETWEEN '"+date+"'"+"AND '"+date1+"'");
+            List<InmatesEntity> inmatesList = query.getResultList();
+            return inmatesList;
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+
     }
 
     public List<UsersEntity> seeAllUsers() {
@@ -220,8 +243,12 @@ public class AppHibernate {
             if (userList.contains(user)) {
                 System.out.println("The record already exists");
             } else {
+                System.out.println("Insert user CNP: ");
+                String cnp = Utils.scannerOptionString();
+                user.setCnp(cnp);
                 insert(user);
             }
+            session.close();
 
         } catch (Exception e) {
             System.out.println(e);

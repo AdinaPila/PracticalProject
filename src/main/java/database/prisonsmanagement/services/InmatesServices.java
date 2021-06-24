@@ -16,6 +16,7 @@ public class InmatesServices extends AppHibernate {
         object = inmateRegistration(prisonId);
         String cnp = Utils.scannerOptionString();
         Utils.setCnp(object,cnp);
+        object.setCnpInmate(cnp);
         insert(object);
 
     }

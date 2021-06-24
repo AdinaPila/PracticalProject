@@ -5,9 +5,12 @@ import database.prisonsmanagement.Utils;
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.PrisonsEntity;
 import database.prisonsmanagement.entities.UsersEntity;
+import database.prisonsmanagement.services.InmatesServices;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import java.time.LocalDate;
 
 public class Meniu extends AppHibernate {
-
 
     public void selectRegistrationVsLogin() {
         System.out.println("Welcome to the Prisons Management Application\nWhat action would you like to perform?\n1.Registration\n2.Login");
@@ -36,6 +39,7 @@ public class Meniu extends AppHibernate {
 
     public void meniu(Object object, String id) {
         UsersEntity user = findUsersByCnp(id);
+        InmatesServices inmate = new InmatesServices();
 
         if (user.getAccessLevel() == 1) {
 
@@ -44,13 +48,13 @@ public class Meniu extends AppHibernate {
             while (option != 0) {
                 switch (option) {
                     case 1:
-                        insert(new InmatesEntity());
+                        inmate.insertInmate(new InmatesEntity());
                         break;
                     case 2:
                         System.out.println("Insert CNP of the inmate that you want to be updated: ");
                         String cnpForUpdate = Utils.scannerOptionString();
-                        InmatesEntity inmate = findInmateByCnp(cnpForUpdate);
-                        update(inmate, cnpForUpdate);
+                        InmatesEntity inmateUpdate = findInmateByCnp(cnpForUpdate);
+                        update(inmateUpdate, cnpForUpdate);
                         break;
                     case 3:
                         System.out.println("Insert CNP of the inmate that you want to be deleted: ");
@@ -90,10 +94,11 @@ public class Meniu extends AppHibernate {
                             System.out.println(item);
                         }
 
-
                         break;
                     case 2:
-                        for (InmatesEntity item:seeAllInmates()) {
+                        System.out.println("Insert checkOutDate");
+                        LocalDate date = LocalDate.of(Utils.scannerOption(),Utils.scannerOption(),Utils.scannerOption());
+                        for (InmatesEntity item:seeAllInmates(date)) {
                             System.out.println(item);
                         }
 

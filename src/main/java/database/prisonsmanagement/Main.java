@@ -34,10 +34,11 @@ public class Main {
        // inmate.insertInmate(inmate);
        // user.insertUser(user);
        // prison.insertPrison(prison);
-       // meniu.selectRegistrationVsLogin();
-
+       //
         //meniu.meniu(user, "1980507460028");
-        prisonServices.updatePrison(prison,"2");
+       //prisonServices.updatePrison(prison,"2");
+        meniu.selectRegistrationVsLogin();
+
 
 
 
