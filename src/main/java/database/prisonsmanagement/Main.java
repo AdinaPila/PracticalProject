@@ -4,6 +4,8 @@ import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.PrisonsEntity;
 import database.prisonsmanagement.entities.UsersEntity;
+import database.prisonsmanagement.services.PrisonsServices;
+import database.prisonsmanagement.services.UsersServices;
 import database.prisonsmanagement.userinterface.Meniu;
 
 public class Main {
@@ -24,7 +26,11 @@ public class Main {
 
      //   inmate.updateInmate(inmate,"1897695254522");
      //   prison.updatePrison(prison, "2");
-        user.updateUser(user, "1980507460028");
+
+        UsersServices user1 = new UsersServices();
+//        user1.updateUser(user, "1980507460028");
+        PrisonsServices prisonServices = new PrisonsServices();
+        prisonServices.insertPrison(prison);
        // inmate.insertInmate(inmate);
        // user.insertUser(user);
        // prison.insertPrison(prison);

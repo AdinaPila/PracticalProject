@@ -98,18 +98,6 @@ public class UsersEntity extends AppHibernate {
         return user;
     }
 
-    public void insertUser(UsersEntity object) {
-        object = object.userRegistration();
-        String userCnp = Utils.scannerOptionString();
-        Utils.setCnp(object,userCnp);
-        insert(object);
-    }
-
-    public void updateUser(UsersEntity user, String cnp){
-        user = findUsersByCnp(cnp);
-        user.selectForUpdateUser(user);
-        update(user, cnp);
-    }
 
     public String selectUserRankAndAccessLevel(Object user) {
         System.out.println("Insert user rank:\n 1.LIEUTENANT\n" +
@@ -149,47 +137,6 @@ public class UsersEntity extends AppHibernate {
     }
 
 
-    void selectForUpdateUser(Object entity) {
-        System.out.println("What element would you like to be updated?\n1.First name\n2.Last name\n3.CNP\n4.User Rank\n5.Email address\n6.Password");
-        int option = Utils.scannerOption();
-        Scanner scanner = new Scanner(System.in);
-        switch (option) {
-            case 1:
-                System.out.println("Introduce the new first name: ");
-                ((UsersEntity) entity).setFirstName(scanner.nextLine());
-                break;
-            case 2:
-                System.out.println("Introduce the new last name: ");
-                ((UsersEntity) entity).setLastName(scanner.nextLine());
-                break;
-            case 3:
-                System.out.println("Introduce the new cnp: ");
-                String userCnp = Utils.scannerOptionString();
-                if (Utils.isCNPValid(userCnp)) {
-                    ((UsersEntity) entity).setCnp(userCnp);
-                } else {
-
-                    while (Utils.isCNPValid(userCnp) == false) {
-                        System.out.println("CNP is not valid. Try again");
-                        userCnp = Utils.scannerOptionString();
-                    }
-                    ((UsersEntity) entity).setCnp(userCnp);
-                }
-                break;
-            case 4:
-                System.out.println("Introduce the new rank: ");
-                ((UsersEntity) entity).setUserRank(selectUserRankAndAccessLevel((UsersEntity) entity));
-                break;
-            case 5:
-                System.out.println("Introduce the new email address: ");
-                ((UsersEntity) entity).setAppEmail(scanner.next());
-                break;
-            case 6:
-                System.out.println("Introduce the new password: ");
-                ((UsersEntity) entity).setAppPassword(scanner.next());
-        }
-
-    }
 
 
 }
