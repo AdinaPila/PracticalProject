@@ -19,7 +19,7 @@ public class PrisonsEntity extends AppHibernate {
 
     private Integer securityLevel;
 
-    @OneToMany(mappedBy = "prisonsEntity")
+    @OneToMany( fetch = FetchType.EAGER, mappedBy = "prisonsEntity")
     private List<InmatesEntity> inmatesList;
 
 

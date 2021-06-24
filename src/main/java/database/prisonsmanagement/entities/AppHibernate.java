@@ -13,6 +13,7 @@ import org.hibernate.service.ServiceRegistry;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,7 +25,7 @@ public class AppHibernate {
             Properties properties = new Properties();
             properties.put(Environment.URL, "jdbc:mysql://localhost:3306/prison_management?serverTimezone=UTC");
             properties.put(Environment.USER, "root");
-            properties.put(Environment.PASS, "Consulting1#");
+            properties.put(Environment.PASS, "1qaz2wsx");
             properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
             properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
             properties.put(Environment.SHOW_SQL, "true");
@@ -219,7 +220,25 @@ public class AppHibernate {
             System.out.println(e);
         }
         return null;
+    }
 
+    public Integer prisonVacancy(Integer prisonId){
+        Integer vacancy = 0;
+        try {
+            //Session session = getSessionFactory().openSession();
+            PrisonsEntity prisonsEntity = findById(prisonId);
+            System.out.println(prisonsEntity.getPrisonName());
+            Integer totalCapacity = prisonsEntity.getTotalCapacity();
+            List<InmatesEntity> inmateList = new ArrayList<>();
+            inmateList = prisonsEntity.getInmatesList();
+            Integer numberOfInmates = inmateList.size();
+            vacancy = totalCapacity - numberOfInmates;
+          //  session.close();
+           // return totalCapacity - numberOfInmates;
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        return vacancy;
     }
 
     public List<UsersEntity> seeAllUsers() {
@@ -227,6 +246,7 @@ public class AppHibernate {
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM UsersEntity");
             List<UsersEntity> usersList = query.getResultList();
+            session.close();
             return usersList;
 
         } catch (Exception e) {
