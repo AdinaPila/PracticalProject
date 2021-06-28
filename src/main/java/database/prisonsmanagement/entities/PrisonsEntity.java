@@ -1,5 +1,7 @@
 package database.prisonsmanagement.entities;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,10 +13,13 @@ public class PrisonsEntity extends AppHibernate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer prisonId;
 
+    @NotNull
     private String prisonName;
 
+    @NotNull
     private Integer totalCapacity;
 
+    @NotNull
     private Integer securityLevel;
 
     @OneToMany( fetch = FetchType.EAGER, mappedBy = "prisonsEntity")

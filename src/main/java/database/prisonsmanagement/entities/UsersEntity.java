@@ -1,25 +1,32 @@
 package database.prisonsmanagement.entities;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class UsersEntity extends AppHibernate {
 
+    @NotNull
     private String firstName;
 
+    @NotNull
     private String lastName;
 
     @Id
     @Column(name = "cnp", unique = true, nullable = false, columnDefinition = "VARCHAR(13)")
     private String cnp;
 
+    @NotNull
     private String userRank;
 
     private Integer accessLevel;
 
+    @NotNull
     private String appEmail;
 
+    @NotNull
     private String appPassword;
 
     public String getFirstName() {

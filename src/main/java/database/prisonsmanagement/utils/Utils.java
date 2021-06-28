@@ -44,6 +44,21 @@ public class Utils {
         return true;
     }
 
+    public static boolean isNameValid(String name){
+        Pattern pattern = Pattern.compile("\\b([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+");
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+
+    }
+
+    public static boolean isEmailValid(String email){
+        Pattern pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+
+
+    }
+
     public static void setCnp(Object object, String cnp) {
         if (object instanceof InmatesEntity) {
             if (Utils.isCNPValid(cnp)) {

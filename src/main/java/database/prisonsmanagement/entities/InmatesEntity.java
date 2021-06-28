@@ -1,5 +1,6 @@
 package database.prisonsmanagement.entities;
 
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -10,8 +11,10 @@ import java.time.LocalDate;
 @Table(name = "inmates")
 public class InmatesEntity extends AppHibernate {
 
+    @NotNull
     private String firstNamePrison;
 
+    @NotNull
     private String lastNamePrison;
 
 
@@ -19,8 +22,10 @@ public class InmatesEntity extends AppHibernate {
     @Column(name = "cnpInmate", unique = true, nullable = false, columnDefinition = "VARCHAR(13)")
     private String cnpInmate;
 
+    @NotNull
     private LocalDate checkInPrison;
 
+    @NotNull
     private LocalDate checkOutPrison;
 
     @NotFound(action = NotFoundAction.IGNORE)

@@ -1,5 +1,6 @@
 package database.prisonsmanagement.services;
 
+import com.mysql.cj.util.DnsSrv;
 import database.prisonsmanagement.UserRank;
 import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
@@ -12,11 +13,11 @@ public class UsersServices extends AppHibernate {
     public void insertUser(UsersEntity object) {
         object = userRegistration();
         String userCnp = Utils.scannerOptionString();
-        Utils.setCnp(object,userCnp);
+        Utils.setCnp(object, userCnp);
         insert(object);
     }
 
-    public void updateUser(UsersEntity user, String cnp){
+    public void updateUser(UsersEntity user, String cnp) {
         user = findUsersByCnp(cnp);
         selectForUpdateUser(user);
         update(user, cnp);
@@ -29,11 +30,27 @@ public class UsersServices extends AppHibernate {
         switch (option) {
             case 1:
                 System.out.println("Introduce the new first name: ");
-                entity.setFirstName(scanner.nextLine());
+                String firstName = Utils.scannerOptionString();
+                if (Utils.isNameValid(firstName)) {
+                    entity.setFirstName(firstName);
+                } else {
+                    System.out.println("The name is not valid. Try again");
+                    firstName = Utils.scannerOptionString();
+                    Utils.isNameValid(firstName);
+                }
+
                 break;
             case 2:
                 System.out.println("Introduce the new last name: ");
-                entity.setLastName(scanner.nextLine());
+                String lastName = Utils.scannerOptionString();
+                if (Utils.isNameValid(lastName)) {
+                    entity.setLastName(lastName);
+                } else {
+                    System.out.println("The name is not valid. Try again");
+                    lastName = Utils.scannerOptionString();
+                    Utils.isNameValid(lastName);
+                }
+
                 break;
             case 3:
                 System.out.println("Introduce the new cnp: ");
@@ -45,6 +62,7 @@ public class UsersServices extends AppHibernate {
                     while (Utils.isCNPValid(userCnp) == false) {
                         System.out.println("CNP is not valid. Try again");
                         userCnp = Utils.scannerOptionString();
+                        Utils.isCNPValid(userCnp);
                     }
                     entity.setCnp(userCnp);
                 }
@@ -55,7 +73,18 @@ public class UsersServices extends AppHibernate {
                 break;
             case 5:
                 System.out.println("Introduce the new email address: ");
-                entity.setAppEmail(scanner.next());
+                String email = Utils.scannerOptionString();
+                if(Utils.isEmailValid(email)){
+                    entity.setAppEmail(email);
+                }else {
+                    while (Utils.isEmailValid(email) == false){
+                        System.out.println("Email is not valid. Try again");
+                        email = Utils.scannerOptionString();
+                        Utils.isEmailValid(email);
+                    }
+
+                }
+
                 break;
             case 6:
                 System.out.println("Introduce the new password: ");
@@ -67,15 +96,47 @@ public class UsersServices extends AppHibernate {
     public UsersEntity userRegistration() {
         UsersEntity user = new UsersEntity();
         System.out.println("Insert user first name: ");
-        user.setFirstName(Utils.scannerOptionString());
+        String firstName = Utils.scannerOptionString();
+        if (Utils.isNameValid(firstName)) {
+            user.setFirstName(firstName);
+        } else {
+            while (Utils.isNameValid(firstName) == false) {
+                System.out.println("The name is not valid. Try again");
+                firstName = Utils.scannerOptionString();
+                Utils.isNameValid(firstName);
+            }
+
+        }
+
         System.out.println("Insert user last name: ");
-        user.setLastName(Utils.scannerOptionString());
+        String lastName = Utils.scannerOptionString();
+        if (Utils.isNameValid(lastName)) {
+            user.setLastName(lastName);
+        } else {
+            while (Utils.isNameValid(lastName) == false) {
+                System.out.println("The name is not valid. Try again");
+                lastName = Utils.scannerOptionString();
+                Utils.isNameValid(lastName);
+            }
+
+        }
+
         selectUserRankAndAccessLevel(user);
         System.out.println("Insert the login email address: ");
-        user.setAppEmail(Utils.scannerOptionString());
+        String email = Utils.scannerOptionString();
+        if(Utils.isEmailValid(email)){
+            user.setAppEmail(email);
+        }else {
+            while (Utils.isEmailValid(email) == false){
+                System.out.println("Email is not valid. Try again");
+                email = Utils.scannerOptionString();
+                Utils.isEmailValid(email);
+            }
+
+        }
+
         System.out.println("Insert the password: ");
         user.setAppPassword(Utils.scannerOptionString());
-        System.out.println("Insert user CNP: ");
 
         return user;
     }
@@ -89,13 +150,13 @@ public class UsersServices extends AppHibernate {
                 "5.BRIGADIER\n" +
                 "6.GENERAL");
         int option = Utils.scannerOption();
-        while (option < 1 || option > 6){
+        while (option < 1 || option > 6) {
             System.out.println("Your option is invalid. Try again");
             option = Utils.scannerOption();
         }
         switch (option) {
             case 1:
-                 user.setUserRank(UserRank.LIEUTENANT.getRank());
+                user.setUserRank(UserRank.LIEUTENANT.getRank());
                 break;
             case 2:
                 user.setUserRank(UserRank.CAPTAIN.getRank());

@@ -33,10 +33,28 @@ public class InmatesServices extends AppHibernate {
         switch (option) {
             case 1:
                 System.out.println("Introduce the new first name: ");
-                entity.setFirstNamePrison(Utils.scannerOptionString());
+                String firstName = Utils.scannerOptionString();
+                if(Utils.isNameValid(firstName)){
+                    entity.setFirstNamePrison(firstName);
+                }else{
+                    while (Utils.isNameValid(firstName) == false){
+                        System.out.println("The name is not valid. Try again");
+                        firstName = Utils.scannerOptionString();
+                    }
+                }
+
                 break;
             case 2:
                 System.out.println("Introduce the new last name: ");
+                String lastName = Utils.scannerOptionString();
+                if(Utils.isNameValid(lastName)){
+                    entity.setFirstNamePrison(lastName);
+                }else{
+                    while (Utils.isNameValid(lastName) == false){
+                        System.out.println("The name is not valid. Try again");
+                        lastName = Utils.scannerOptionString();
+                    }
+                }
                 entity.setLastNamePrison(Utils.scannerOptionString());
                 break;
             case 3:
@@ -75,9 +93,25 @@ public class InmatesServices extends AppHibernate {
         database.prisonsmanagement.entities.PrisonsEntity prisonsEntity = null;
         AppHibernate hibernate = new AppHibernate();
         System.out.println("Insert inmate first name: ");
-        inmate.setFirstNamePrison(Utils.scannerOptionString());
+        String firstName = Utils.scannerOptionString();
+        if(Utils.isNameValid(firstName)){
+            inmate.setFirstNamePrison(firstName);
+        }else{
+            while (Utils.isNameValid(firstName) == false){
+                System.out.println("The name is not valid. Try again");
+                firstName = Utils.scannerOptionString();
+            }
+        }
         System.out.println("Insert inmate last name: ");
-        inmate.setLastNamePrison(Utils.scannerOptionString());
+        String lastName = Utils.scannerOptionString();
+        if(Utils.isNameValid(lastName)){
+            inmate.setLastNamePrison(lastName);
+        }else{
+            while (Utils.isNameValid(lastName) == false){
+                System.out.println("The name is not valid. Try again");
+                lastName = Utils.scannerOptionString();
+            }
+        }
         System.out.println("Insert checkIn date - use format yyyy mm dd: ");
         inmate.setCheckInPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
         System.out.println("Insert checkOut date - use format yyyy mm dd:  ");

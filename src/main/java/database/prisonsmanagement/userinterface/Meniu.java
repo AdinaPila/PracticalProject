@@ -59,14 +59,16 @@ public class Meniu extends AppHibernate {
                 switch (option) {
                     case 1:
                         inmate.insertInmate(new InmatesEntity());
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Inserted inmate - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Inserted inmate - " + LocalDateTime.now());
                         break;
                     case 2:
                         System.out.println("Insert CNP of the inmate that you want to be updated: ");
+                        String cnpToBeUpdated = Utils.scannerOptionString();
+                        InmatesEntity inmateUpdate = findInmateByCnp(cnpToBeUpdated);
+                        System.out.println("Insert the new CNP:");
                         String cnpForUpdate = Utils.scannerOptionString();
-                        InmatesEntity inmateUpdate = findInmateByCnp(cnpForUpdate);
                         update(inmateUpdate, cnpForUpdate);
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Update inmate - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Update inmate - " + LocalDateTime.now());
 
                         break;
                     case 3:
@@ -74,12 +76,12 @@ public class Meniu extends AppHibernate {
                         String cnpForDelete = Utils.scannerOptionString();
                         InmatesEntity inmateForDelete = findInmateByCnp(cnpForDelete);
                         delete(inmateForDelete);
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Delete inmate - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Delete inmate - " + LocalDateTime.now());
 
                         break;
                     case 4:
                         prisonForInsert.insertPrison(new PrisonsEntity());
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Inserted a new prison - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Inserted a new prison - " + LocalDateTime.now());
 
                         break;
                     case 5:
@@ -87,7 +89,7 @@ public class Meniu extends AppHibernate {
                         String idForUpdate = Utils.scannerOptionString();
                         PrisonsEntity prison = findById(Integer.parseInt(idForUpdate));
                         update(prison, id);
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Update a prison - "+ LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Update a prison - "+ LocalDateTime.now());
 
                         break;
                     case 6:
@@ -96,7 +98,7 @@ public class Meniu extends AppHibernate {
                         PrisonsEntity prisonForDelete = findById(Integer.parseInt(idForDelete));
                         update(prisonForDelete, idForDelete);
                         delete(prisonForDelete);
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - Delete a prison - "+ LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - Delete a prison - "+ LocalDateTime.now());
 
                         break;
                 }
@@ -114,7 +116,7 @@ public class Meniu extends AppHibernate {
                         for (UsersEntity item:seeAllUsers()) {
                             System.out.println(item);
                         }
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See all the application users - "+LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See all the application users - "+LocalDateTime.now());
 
                         break;
                     case 2:
@@ -123,7 +125,7 @@ public class Meniu extends AppHibernate {
                         for (InmatesEntity item:seeAllInmates(date)) {
                             System.out.println(item);
                         }
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See the inmates that have the chekout date until the given date - "+LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See the inmates that have the chekout date until the given date - "+LocalDateTime.now());
 
                         break;
                     case 3:
@@ -134,7 +136,7 @@ public class Meniu extends AppHibernate {
                         for (InmatesEntity item : seeAllInmatesBetween(date1,date2)){
                             System.out.println(item.getFirstNamePrison() + " "+ item.getLastNamePrison() + " - "+"checkout date: "+ item.getCheckOutPrison());
                         }
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See all the inmates with the checkout date between 2 given dates - "+LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See all the inmates with the checkout date between 2 given dates - "+LocalDateTime.now());
 
 
                         break;
@@ -144,7 +146,7 @@ public class Meniu extends AppHibernate {
                             int vacancy = item.getTotalCapacity() - item.getInmatesList().size();
                             System.out.println(item.getPrisonName() + " - "+vacancy);
                         }
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See all prisons with vacancy - "+LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See all prisons with vacancy - "+LocalDateTime.now());
 
                         break;
 
@@ -152,17 +154,17 @@ public class Meniu extends AppHibernate {
                         for (PrisonsEntity item:seeAllPrisons()) {
                             System.out.println(item);
                         }
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See all the registered prisons - "+LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See all the registered prisons - "+LocalDateTime.now());
 
                         break;
                     case 6:
                         System.out.println("The ocupation average is " + seeTheAverageOfOcupation() + " percent");
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See the average of ocupation of all prisons - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See the average of ocupation of all prisons - " + LocalDateTime.now());
 
                         break;
                     case 7:
                        inmate.seeTheAverageOfOcupationForEachPrison();
-                        log.writeLogs(object.getFirstName() + " "+object.getLastName() + " - See the average ocupation of each prison - " + LocalDateTime.now());
+                        log.writeLogs(user.getFirstName() + " "+user.getLastName() + " - See the average ocupation of each prison - " + LocalDateTime.now());
 
                         break;
                 }

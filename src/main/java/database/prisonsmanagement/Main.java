@@ -31,8 +31,10 @@ public class Main {
         UsersServices user1 = new UsersServices();
 
         PrisonsServices prisonServices = new PrisonsServices();
-        
+
         meniu.selectRegistrationVsLogin();
+
+       // meniu.meniu(user,"1894623460073");
 
     }
 
