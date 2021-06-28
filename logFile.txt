@@ -1,6 +1,2 @@
-null null - See all the application users
-null null - See the inmates that have the chokout date until the given date
-null null - performed registration
-1870405210036 Mihail - performed registration
-Mihail Iordache - performed registration
-Alina Mateescu - performed registration
+Adina Silvarom - performed registration
+Diana Florian - performed registration - 2021-06-28

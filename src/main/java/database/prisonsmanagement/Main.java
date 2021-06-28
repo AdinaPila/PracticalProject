@@ -24,27 +24,15 @@ public class Main {
         InmatesEntity inmate2 = new InmatesEntity();
 
         InmatesServices inmatesServices = new InmatesServices();
-        // hibernate.update(inmate2,"1730506460078");
 
-        // hibernate.update(prison1, "1");
         Meniu meniu = new Meniu();
 
-        //   inmate.updateInmate(inmate,"1897695254522");
-        //   prison.updatePrison(prison, "2");
 
         UsersServices user1 = new UsersServices();
-//        user1.updateUser(user, "1980507460028");
-        PrisonsServices prisonServices = new PrisonsServices();
-        //  prisonServices.insertPrison(prison);
-        // inmate.insertInmate(inmate);
-        // user.insertUser(user);
-        // prison.insertPrison(prison);
-        //
-        //meniu.meniu(user, "1980507460028");
-        //prisonServices.updatePrison(prison,"2");
-        //meniu.selectRegistrationVsLogin();
 
-      meniu.selectRegistrationVsLogin();
+        PrisonsServices prisonServices = new PrisonsServices();
+        
+        meniu.selectRegistrationVsLogin();
 
     }
 
