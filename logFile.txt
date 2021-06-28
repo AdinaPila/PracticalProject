@@ -5,3 +5,13 @@ null null - Update inmate - 2021-06-28T19:15:41.401
 null null - Update inmate - 2021-06-28T19:21:01.675
 azdefdgf AZDFER - performed registration - 2021-06-28T19:26:32.191
 Adina Vasile - performed registration - 2021-06-28T20:07:37.833
+Silviu Duduta - See all the application users - 2021-06-28T20:50:05.480
+Silviu Duduta - See the inmates that have the chekout date until the given date - 2021-06-28T20:50:31.107
+Silviu Duduta - See all the inmates with the checkout date between 2 given dates - 2021-06-28T20:51:00.657
+Silviu Duduta - See all prisons with vacancy - 2021-06-28T20:51:15.182
+Silviu Duduta - See all the registered prisons - 2021-06-28T20:51:29.560
+Silviu Duduta - See the average of ocupation of all prisons - 2021-06-28T20:51:44.124
+Silviu Duduta - See the average ocupation of each prison - 2021-06-28T20:51:59.243
+Silviu Duduta - login successfull - 2021-06-28T20:52:22.225
+Didina Balas - Inserted inmate - 2021-06-28T21:08:42.454
+Didina Balas - Inserted inmate - 2021-06-28T21:10:16.190

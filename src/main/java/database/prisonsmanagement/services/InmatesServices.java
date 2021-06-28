@@ -15,13 +15,13 @@ public class InmatesServices extends AppHibernate {
         int prisonId = Utils.scannerOption();
         object = inmateRegistration(prisonId);
         String cnp = Utils.scannerOptionString();
-        Utils.setCnp(object,cnp);
+        Utils.setCnp(object, cnp);
         object.setCnpInmate(cnp);
         insert(object);
 
     }
 
-    public void updateInmate(InmatesEntity inmate, String cnp){
+    public void updateInmate(InmatesEntity inmate, String cnp) {
         inmate = findInmateByCnp(cnp);
         selectForUpdateInmate(inmate);
         update(inmate, cnp);
@@ -34,10 +34,10 @@ public class InmatesServices extends AppHibernate {
             case 1:
                 System.out.println("Introduce the new first name: ");
                 String firstName = Utils.scannerOptionString();
-                if(Utils.isNameValid(firstName)){
+                if (Utils.isNameValid(firstName)) {
                     entity.setFirstNamePrison(firstName);
-                }else{
-                    while (Utils.isNameValid(firstName) == false){
+                } else {
+                    while (Utils.isNameValid(firstName) == false) {
                         System.out.println("The name is not valid. Try again");
                         firstName = Utils.scannerOptionString();
                     }
@@ -47,10 +47,10 @@ public class InmatesServices extends AppHibernate {
             case 2:
                 System.out.println("Introduce the new last name: ");
                 String lastName = Utils.scannerOptionString();
-                if(Utils.isNameValid(lastName)){
+                if (Utils.isNameValid(lastName)) {
                     entity.setFirstNamePrison(lastName);
-                }else{
-                    while (Utils.isNameValid(lastName) == false){
+                } else {
+                    while (Utils.isNameValid(lastName) == false) {
                         System.out.println("The name is not valid. Try again");
                         lastName = Utils.scannerOptionString();
                     }
@@ -94,28 +94,61 @@ public class InmatesServices extends AppHibernate {
         AppHibernate hibernate = new AppHibernate();
         System.out.println("Insert inmate first name: ");
         String firstName = Utils.scannerOptionString();
-        if(Utils.isNameValid(firstName)){
+        if (Utils.isNameValid(firstName)) {
             inmate.setFirstNamePrison(firstName);
-        }else{
-            while (Utils.isNameValid(firstName) == false){
+        } else {
+            while (Utils.isNameValid(firstName) == false) {
                 System.out.println("The name is not valid. Try again");
                 firstName = Utils.scannerOptionString();
             }
         }
         System.out.println("Insert inmate last name: ");
         String lastName = Utils.scannerOptionString();
-        if(Utils.isNameValid(lastName)){
+        if (Utils.isNameValid(lastName)) {
             inmate.setLastNamePrison(lastName);
-        }else{
-            while (Utils.isNameValid(lastName) == false){
+        } else {
+            while (Utils.isNameValid(lastName) == false) {
                 System.out.println("The name is not valid. Try again");
                 lastName = Utils.scannerOptionString();
             }
         }
         System.out.println("Insert checkIn date - use format yyyy mm dd: ");
-        inmate.setCheckInPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
+        int year = Utils.scannerOption();
+        while ((year < 1900 || year > 2050) == true) {
+            System.out.println("Year is not valid");
+            year = Utils.scannerOption();
+        }
+        int month = Utils.scannerOption();
+        while ((month < 1 || month > 12) == true) {
+            System.out.println("Month is not valid");
+            month = Utils.scannerOption();
+        }
+        int day = Utils.scannerOption();
+        while ((day < 1 || day > 31) == true) {
+            System.out.println("Day is not valid");
+            day = Utils.scannerOption();
+        }
+        LocalDate checkInDate = LocalDate.of(year, month, day);
+        inmate.setCheckInPrison(checkInDate);
         System.out.println("Insert checkOut date - use format yyyy mm dd:  ");
-        inmate.setCheckOutPrison(LocalDate.of(Utils.scannerOption(), Utils.scannerOption(), Utils.scannerOption()));
+        int year1 = Utils.scannerOption();
+        while ((year1 < 1900 || year1 > 2050 || year1 < year) == true) {
+            System.out.println("Year is not valid");
+            year1 = Utils.scannerOption();
+        }
+        int month1 = Utils.scannerOption();
+        while ((month1 < 1 || month1 > 12) == true) {
+            System.out.println("Month is not valid");
+            month1 = Utils.scannerOption();
+        }
+        int day1 = Utils.scannerOption();
+        while ((day1 < 1 || day1 > 31) == true) {
+            System.out.println("Day is not valid");
+            day1 = Utils.scannerOption();
+        }
+
+        LocalDate checkOutDate = LocalDate.of(year1,month1,day1);
+        inmate.setCheckOutPrison(checkOutDate);
         try {
             Session session = hibernate.getSessionFactory().openSession();
             prisonsEntity = session.find(PrisonsEntity.class, prisonId);
