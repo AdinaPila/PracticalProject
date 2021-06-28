@@ -1,7 +1,5 @@
 package database.prisonsmanagement.entities;
 
-import database.prisonsmanagement.Utils;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -63,6 +61,14 @@ public class PrisonsEntity extends AppHibernate {
         return inmatesList;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "PrisonsEntity{" +
+                "prisonId=" + prisonId +
+                ", prisonName='" + prisonName + '\'' +
+                ", totalCapacity=" + totalCapacity +
+                ", securityLevel=" + securityLevel +
+                ", inmatesList=" + inmatesList +
+                '}';
+    }
 }

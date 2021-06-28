@@ -1,7 +1,7 @@
 package database.prisonsmanagement.services;
 
 import database.prisonsmanagement.UserRank;
-import database.prisonsmanagement.Utils;
+import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.UsersEntity;
 
@@ -82,13 +82,17 @@ public class UsersServices extends AppHibernate {
 
 
     public String selectUserRankAndAccessLevel(UsersEntity user) {
-        System.out.println("Insert user rank:\n 1.LIEUTENANT\n" +
+        System.out.println("Insert user rank:\n1.LIEUTENANT\n" +
                 "2.CAPTAIN\n" +
                 "3.MAJOR\n" +
                 "4.COLONEL\n" +
                 "5.BRIGADIER\n" +
                 "6.GENERAL");
         int option = Utils.scannerOption();
+        while (option < 1 || option > 6){
+            System.out.println("Your option is invalid. Try again");
+            option = Utils.scannerOption();
+        }
         switch (option) {
             case 1:
                  user.setUserRank(UserRank.LIEUTENANT.getRank());
@@ -107,6 +111,7 @@ public class UsersServices extends AppHibernate {
                 break;
             case 6:
                 user.setUserRank(UserRank.GENERAL.getRank());
+
         }
         System.out.println("The user rank is: " + user.getUserRank());
         if (option > 3) {

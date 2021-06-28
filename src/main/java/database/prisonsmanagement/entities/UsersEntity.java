@@ -1,10 +1,6 @@
 package database.prisonsmanagement.entities;
 
-import database.prisonsmanagement.UserRank;
-import database.prisonsmanagement.Utils;
-
 import javax.persistence.*;
-import java.util.Scanner;
 
 @Entity
 @Table(name = "users")
@@ -82,6 +78,16 @@ public class UsersEntity extends AppHibernate {
         this.appPassword = appPassword;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", cnp='" + cnp + '\'' +
+                ", userRank='" + userRank + '\'' +
+                ", accessLevel=" + accessLevel +
+                ", appEmail='" + appEmail + '\'' +
+                ", appPassword='" + appPassword + '\'' +
+                '}';
+    }
 }

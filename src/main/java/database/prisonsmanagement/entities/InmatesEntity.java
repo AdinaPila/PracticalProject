@@ -1,7 +1,7 @@
 package database.prisonsmanagement.entities;
 
-import database.prisonsmanagement.Utils;
-import org.hibernate.Session;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,6 +23,7 @@ public class InmatesEntity extends AppHibernate {
 
     private LocalDate checkOutPrison;
 
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "prisonId")
     private PrisonsEntity prisonsEntity;

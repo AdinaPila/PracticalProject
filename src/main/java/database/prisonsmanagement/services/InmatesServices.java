@@ -1,6 +1,6 @@
 package database.prisonsmanagement.services;
 
-import database.prisonsmanagement.Utils;
+import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.PrisonsEntity;

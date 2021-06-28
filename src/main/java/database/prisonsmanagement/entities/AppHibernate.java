@@ -1,6 +1,6 @@
 package database.prisonsmanagement.entities;
 
-import database.prisonsmanagement.Utils;
+import database.prisonsmanagement.utils.Utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,7 +10,6 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
-import java.lang.reflect.UndeclaredThrowableException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class AppHibernate {
             Properties properties = new Properties();
             properties.put(Environment.URL, "jdbc:mysql://localhost:3306/prison_management?serverTimezone=UTC");
             properties.put(Environment.USER, "root");
-            properties.put(Environment.PASS, "1qaz2wsx");
+            properties.put(Environment.PASS, "Consulting1#");
             properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
             properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
             properties.put(Environment.SHOW_SQL, "true");
@@ -208,18 +207,85 @@ public class AppHibernate {
 
 
     public List<InmatesEntity> seeAllInmatesBetween(LocalDate startDate, LocalDate endDate) {
+       List inmatesList = new ArrayList<>();
         try {
             Date date = java.sql.Date.valueOf(startDate);
-            Date date1 = java.sql.Date.valueOf(startDate);
+            Date date1 = java.sql.Date.valueOf(endDate);
             Session session = getSessionFactory().openSession();
-            Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison BETWEEN '"+date+"'"+"AND '"+date1+"'");
-            List<InmatesEntity> inmatesList = query.getResultList();
-            return inmatesList;
+            Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison BETWEEN '"+date+"' AND '"+date1+"'");
+
+            inmatesList = query.getResultList();
+            if(inmatesList.size() == 0){
+                System.out.println("Lista este goala");
+            }
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return inmatesList;
+    }
+
+    public List<PrisonsEntity> seeAllPrisonsWithVacancy(){
+        List<PrisonsEntity> prisonsWithVacancy = new ArrayList<>();
+        try {
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("FROM PrisonsEntity");
+            List<PrisonsEntity> prisons = query.getResultList();
+            for (PrisonsEntity item : prisons) {
+                int vacancy = item.getTotalCapacity() - item.getInmatesList().size();
+                if(vacancy > 0){
+                    prisonsWithVacancy.add(item);
+                }
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return prisonsWithVacancy;
+    }
+
+    public Float seeTheAverageOfOcupation(){
+        float average = 0;
+        long totalCapacity = 0;
+        int totalInmates = 0;
+        List<PrisonsEntity> prisons = seeAllPrisons();
+        for (PrisonsEntity item:prisons) {
+            totalInmates = totalInmates + item.getInmatesList().size();
+        }
+        try {
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("SELECT sum(totalCapacity) FROM PrisonsEntity");
+            totalCapacity = (Long) query.uniqueResult();
+            System.out.println("Total capacity " + totalCapacity);
+            average = (totalCapacity/totalInmates)/100f;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return average;
+    }
+
+    public void seeTheAverageOfOcupationForEachPrison(){
+        float average = 0;
+        int totalCapacity = 0;
+        int totalInmates = 0;
+        List<PrisonsEntity> prisons = new ArrayList<>();
+        try {
+            Session session = getSessionFactory().openSession();
+            Query query = session.createQuery("FROM PrisonsEntity");
+            prisons = query.getResultList();
+            for (PrisonsEntity prison: prisons) {
+                totalCapacity = prison.getTotalCapacity();
+                totalInmates = prison.getInmatesList().size();
+                average = (totalCapacity/totalInmates)/100f;
+                System.out.println(prison.getPrisonName() + " has " + average + " percent ocupation");
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 
     public Integer prisonVacancy(Integer prisonId){

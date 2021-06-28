@@ -1,4 +1,4 @@
-package database.prisonsmanagement;
+package database.prisonsmanagement.utils;
 
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.UsersEntity;
