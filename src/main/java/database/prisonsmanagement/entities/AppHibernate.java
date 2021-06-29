@@ -1,4 +1,4 @@
-package database.prisonsmanagement.entities;
+package com.sda.alina.exercises.prisonsmanagement.entities;
 
 import database.prisonsmanagement.utils.Utils;
 import org.hibernate.Session;
@@ -24,7 +24,7 @@ public class AppHibernate {
             Properties properties = new Properties();
             properties.put(Environment.URL, "jdbc:mysql://localhost:3306/prison_management?serverTimezone=UTC");
             properties.put(Environment.USER, "root");
-            properties.put(Environment.PASS, "Consulting1#");
+            properties.put(Environment.PASS, "1qaz2wsx");
             properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
             properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
             properties.put(Environment.SHOW_SQL, "true");
@@ -192,10 +192,11 @@ public class AppHibernate {
 
     public List<InmatesEntity> seeAllInmates(LocalDate checkOutDate) {
         try {
-            Date date = java.sql.Date.valueOf(checkOutDate);
+            Date date = Date.valueOf(checkOutDate);
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison < '"+date+"'");
             List<InmatesEntity> inmatesList = query.getResultList();
+            session.close();
             return inmatesList;
 
         } catch (Exception e) {
@@ -209,14 +210,14 @@ public class AppHibernate {
     public List<InmatesEntity> seeAllInmatesBetween(LocalDate startDate, LocalDate endDate) {
        List inmatesList = new ArrayList<>();
         try {
-            Date date = java.sql.Date.valueOf(startDate);
-            Date date1 = java.sql.Date.valueOf(endDate);
+            Date date = Date.valueOf(startDate);
+            Date date1 = Date.valueOf(endDate);
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM InmatesEntity WHERE checkOutPrison BETWEEN '"+date+"' AND '"+date1+"'");
 
             inmatesList = query.getResultList();
             if(inmatesList.size() == 0){
-                System.out.println("Lista este goala");
+                System.out.println("The list is empty");
             }
 
         } catch (Exception e) {
@@ -245,7 +246,7 @@ public class AppHibernate {
         return prisonsWithVacancy;
     }
 
-    public Float seeTheAverageOfOcupation(){
+    public Float seeTheAverageOfOccupation(){
         float average = 0;
         long totalCapacity = 0;
         int totalInmates = 0;
@@ -266,7 +267,7 @@ public class AppHibernate {
         return average;
     }
 
-    public void seeTheAverageOfOcupationForEachPrison(){
+    public void seeTheAverageOfOccupationForEachPrison(){
         float average = 0;
         int totalCapacity = 0;
         int totalInmates = 0;
@@ -275,15 +276,17 @@ public class AppHibernate {
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM PrisonsEntity");
             prisons = query.getResultList();
+            System.out.println("\n");
             for (PrisonsEntity prison: prisons) {
                 totalCapacity = prison.getTotalCapacity();
                 totalInmates = prison.getInmatesList().size();
                 average = (totalCapacity/totalInmates)/100f;
-                System.out.println(prison.getPrisonName() + " has " + average + " percent ocupation");
+                System.out.println(prison.getPrisonName() + " has " + average + " percent occupation");
             }
 
         }catch (Exception e){
             System.out.println(e);
+            System.out.println("EITHER THAT OR THE PRISON IS EMPTY\n");
         }
 
     }
@@ -321,7 +324,7 @@ public class AppHibernate {
         return null;
     }
 
-    public void registrationMeniu(UsersEntity user) {
+    public void registrationMenu(UsersEntity user) {
         try {
             Session session = getSessionFactory().openSession();
             Query query = session.createQuery("FROM UsersEntity");

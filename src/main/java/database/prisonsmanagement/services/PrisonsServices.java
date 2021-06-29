@@ -1,8 +1,8 @@
-package database.prisonsmanagement.services;
+package com.sda.alina.exercises.prisonsmanagement.services;
 
-import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.PrisonsEntity;
+import database.prisonsmanagement.utils.Utils;
 
 public class PrisonsServices extends AppHibernate {
 

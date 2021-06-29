@@ -1,10 +1,9 @@
-package database.prisonsmanagement.services;
+package com.sda.alina.exercises.prisonsmanagement.services;
 
-import com.mysql.cj.util.DnsSrv;
 import database.prisonsmanagement.UserRank;
-import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.UsersEntity;
+import database.prisonsmanagement.utils.Utils;
 
 import java.util.Scanner;
 

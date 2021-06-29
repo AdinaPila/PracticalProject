@@ -1,9 +1,9 @@
-package database.prisonsmanagement.services;
+package com.sda.alina.exercises.prisonsmanagement.services;
 
-import database.prisonsmanagement.utils.Utils;
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.PrisonsEntity;
+import database.prisonsmanagement.utils.Utils;
 import org.hibernate.Session;
 
 import java.time.LocalDate;

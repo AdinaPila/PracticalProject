@@ -1,4 +1,4 @@
-package database.prisonsmanagement.utils;
+package com.sda.alina.exercises.prisonsmanagement.utils;
 
 import database.prisonsmanagement.entities.InmatesEntity;
 import database.prisonsmanagement.entities.UsersEntity;
@@ -40,8 +40,8 @@ public class Utils {
     public static boolean isCNPValid(String cnp) {
         Pattern pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
         Matcher matcher = pattern.matcher(cnp);
-//        return matcher.matches();
-        return true;
+        return matcher.matches();
+        //       return true;
     }
 
     public static boolean isNameValid(String name){

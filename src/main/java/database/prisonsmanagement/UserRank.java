@@ -1,4 +1,4 @@
-package database.prisonsmanagement;
+package com.sda.alina.exercises.prisonsmanagement;
 
 public enum UserRank {
     LIEUTENANT("Lieutenant"),

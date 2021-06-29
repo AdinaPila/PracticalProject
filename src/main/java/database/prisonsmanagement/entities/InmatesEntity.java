@@ -1,4 +1,4 @@
-package database.prisonsmanagement.entities;
+package com.sda.alina.exercises.prisonsmanagement.entities;
 
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.NotFound;
@@ -81,5 +81,6 @@ public class InmatesEntity extends AppHibernate {
     public void setPrisonsEntity(PrisonsEntity prisonsEntity) {
         this.prisonsEntity = prisonsEntity;
     }
+
 
 }
