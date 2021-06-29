@@ -1,4 +1,4 @@
-package com.sda.alina.exercises.prisonsmanagement.services;
+package database.prisonsmanagement.services;
 
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.PrisonsEntity;

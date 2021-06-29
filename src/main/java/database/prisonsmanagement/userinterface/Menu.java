@@ -1,4 +1,4 @@
-package com.sda.alina.exercises.prisonsmanagement.userinterface;
+package database.prisonsmanagement.userinterface;
 
 import database.prisonsmanagement.entities.AppHibernate;
 import database.prisonsmanagement.entities.InmatesEntity;

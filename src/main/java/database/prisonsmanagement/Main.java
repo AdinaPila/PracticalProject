@@ -1,4 +1,4 @@
-package com.sda.alina.exercises.prisonsmanagement;
+package database.prisonsmanagement;
 
 import database.prisonsmanagement.userinterface.Menu;
 

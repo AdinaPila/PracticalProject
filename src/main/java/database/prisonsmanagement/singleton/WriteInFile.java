@@ -1,4 +1,4 @@
-package com.sda.alina.exercises.prisonsmanagement.singleton;
+package database.prisonsmanagement.singleton;
 
 import java.io.File;
 import java.io.FileWriter;

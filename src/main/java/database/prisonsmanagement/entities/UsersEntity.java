@@ -1,4 +1,4 @@
-package com.sda.alina.exercises.prisonsmanagement.entities;
+package database.prisonsmanagement.entities;
 
 import com.sun.istack.NotNull;
 

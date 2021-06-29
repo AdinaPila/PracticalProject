@@ -1,6 +1,7 @@
-package com.sda.alina.exercises.prisonsmanagement.entities;
+package database.prisonsmanagement.entities;
 
 import com.sun.istack.NotNull;
+import database.prisonsmanagement.entities.AppHibernate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
