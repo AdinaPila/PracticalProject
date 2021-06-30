@@ -54,10 +54,10 @@ public class Menu extends AppHibernate {
         if (user.getAccessLevel() == 1) {
 
             System.out.println(String.format("\nSelect the action from the below menu:\n\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s",
-                    "1.Insert inmate","8.See the inmates that have the checkout date until the given date", "2.Update inmate",
-                    "9.See all the inmates with the checkout date between 2 given dates", "3.Delete inmate","10.See all prisons with vacancy",
-                    "4.Insert prison","11.See all the registered prisons", "5.Update prison","12.See the average of occupation of all prisons",
-                    "6.Delete prison","13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
+                    "1.Insert inmate", "8.See the inmates that have the checkout date until the given date", "2.Update inmate",
+                    "9.See all the inmates with the checkout date between 2 given dates", "3.Delete inmate", "10.See all prisons with vacancy",
+                    "4.Insert prison", "11.See all the registered prisons", "5.Update prison", "12.See the average of occupation of all prisons",
+                    "6.Delete prison", "13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
             int option = Utils.scannerOption();
             while (option != 0) {
                 switch (option) {
@@ -69,7 +69,16 @@ public class Menu extends AppHibernate {
                         System.out.println("Insert CNP of the inmate that you want to be updated: ");
                         String cnpForUpdate = Utils.scannerOptionString();
                         InmatesEntity inmateUpdate = findInmateByCnp(cnpForUpdate);
-                        update(inmateUpdate, cnpForUpdate);
+                        if (Utils.isCNPValid(cnpForUpdate)) {
+                            inmate.updateInmate(inmateUpdate, cnpForUpdate);
+                        } else {
+                            while (Utils.isCNPValid(cnpForUpdate) == false) {
+                                System.out.println("CNP is not valid. Try again");
+                                cnpForUpdate = Utils.scannerOptionString();
+                            }
+                            inmate.updateInmate(inmateUpdate, cnpForUpdate);
+                        }
+
                         log.writeLogs(object.getFirstName() + " " + object.getLastName() + " - Update inmate - " + LocalDateTime.now());
 
                         break;
@@ -90,7 +99,7 @@ public class Menu extends AppHibernate {
                         System.out.println("Insert the ID of the prison that you want to be updated: ");
                         String idForUpdate = Utils.scannerOptionString();
                         PrisonsEntity prison = findById(Integer.parseInt(idForUpdate));
-                        update(prison, id);
+                        prisonForInsert.updatePrison(prison, idForUpdate);
                         log.writeLogs(object.getFirstName() + " " + object.getLastName() + " - Update a prison - " + LocalDateTime.now());
 
                         break;
@@ -143,7 +152,7 @@ public class Menu extends AppHibernate {
 
                     case 11:
                         for (PrisonsEntity item : seeAllPrisons()) {
-                            System.out.println(item.getPrisonId() + " " +item.getPrisonName() + " " + item.getSecurityLevel() + " " + item.getTotalCapacity());
+                            System.out.println(item.getPrisonId() + " " + item.getPrisonName() + " " + item.getSecurityLevel() + " " + item.getTotalCapacity());
                         }
                         log.writeLogs(object.getFirstName() + " " + object.getLastName() + " - See all the registered prisons - " + LocalDateTime.now());
 
@@ -162,10 +171,10 @@ public class Menu extends AppHibernate {
                 }
                 System.out.println("Return to the principal menu: ");
                 System.out.println(String.format("\nSelect the action from the below menu:\n\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s",
-                        "1.Insert inmate","8.See the inmates that have the checkout date until the given date", "2.Update inmate",
-                        "9.See all the inmates with the checkout date between 2 given dates", "3.Delete inmate","10.See all prisons with vacancy",
-                        "4.Insert prison","11.See all the registered prisons", "5.Update prison","12.See the average of occupation of all prisons",
-                        "6.Delete prison","13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
+                        "1.Insert inmate", "8.See the inmates that have the checkout date until the given date", "2.Update inmate",
+                        "9.See all the inmates with the checkout date between 2 given dates", "3.Delete inmate", "10.See all prisons with vacancy",
+                        "4.Insert prison", "11.See all the registered prisons", "5.Update prison", "12.See the average of occupation of all prisons",
+                        "6.Delete prison", "13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
                 option = Utils.scannerOption();
             }
         } else {
