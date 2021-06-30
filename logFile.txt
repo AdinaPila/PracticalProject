@@ -23,3 +23,9 @@ Andrei Gulie - Update a prison - 2021-06-30T17:53:47.404
 Andrei Gulie - Update a prison - 2021-06-30T17:54:20.224
 Alina Marin - Update inmate - 2021-06-30T18:02:48.832
 Alina Marin - Update inmate - 2021-06-30T18:10:46.615
+Alina Marin - login successful - 2021-06-30T18:29:13.338
+Alina Marin - login successful - 2021-06-30T18:30:12.136
+Alina Marin - login successful - 2021-06-30T18:37:32.130
+Alina Marin - login successful - 2021-06-30T18:38:25.677
+Alina Marin - Update inmate - 2021-06-30T18:42:46.459
+Alina Marin - See the average of occupation of all prisons - 2021-06-30T18:43:09.988

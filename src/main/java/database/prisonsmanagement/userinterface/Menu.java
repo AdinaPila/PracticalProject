@@ -59,7 +59,11 @@ public class Menu extends AppHibernate {
                     "4.Insert prison", "11.See all the registered prisons", "5.Update prison", "12.See the average of occupation of all prisons",
                     "6.Delete prison", "13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
             int option = Utils.scannerOption();
-            while (option != 0) {
+            if(option == 0){
+                System.out.println("Bye Bye!");
+                System.exit(0);
+            }
+            while (option > 0 || option < 14) {
                 switch (option) {
                     case 1:
                         inmate.insertInmate(new InmatesEntity());
@@ -169,6 +173,7 @@ public class Menu extends AppHibernate {
                         break;
 
                 }
+
                 System.out.println("Return to the principal menu: ");
                 System.out.println(String.format("\nSelect the action from the below menu:\n\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s\n%-35s %s",
                         "1.Insert inmate", "8.See the inmates that have the checkout date until the given date", "2.Update inmate",
@@ -176,6 +181,7 @@ public class Menu extends AppHibernate {
                         "4.Insert prison", "11.See all the registered prisons", "5.Update prison", "12.See the average of occupation of all prisons",
                         "6.Delete prison", "13.See the average occupation of each prison", "7.See all the application users", "0.Exit"));
                 option = Utils.scannerOption();
+
             }
         } else {
 
